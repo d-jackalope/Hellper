@@ -51,7 +51,7 @@ func (h *handlers) handleAPIToken(ctx context.Context, tgb *bot.Bot, update *mod
 	}
 
 	localAIToken := strings.TrimSpace(update.Message.Text)
-	url := getURL(user.AiSession.BaseURL, h.config.ModelsListEndpoint)
+	url := getURL(user.AiSession.BaseURL, h.config.AI.ModelsListEndpoint)
 	aiModelsList, err := localai.GetModelsList(url, localAIToken)
 	if err != nil {
 		var text string

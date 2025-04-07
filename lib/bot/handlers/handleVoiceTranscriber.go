@@ -55,8 +55,8 @@ func (h *handlers) handleVoiceTranscriber(ctx context.Context, tgb *bot.Bot, upd
 		log.Error().Int64("chat_id", chatID).Caller().Msg("user not found in context")
 		return
 	}
-	model := h.config.VoiceRecognitionModel
-	url := getURL(user.AiSession.BaseURL, h.config.VoiceRecognitionEndpoint)
+	model := h.config.AI.VoiceRecognitionModel
+	url := getURL(user.AiSession.BaseURL, h.config.AI.VoiceRecognitionEndpoint)
 	transcription, err := localai.TranscribeWhisper(url, model, localFilePath, user.AiSession.AIToken)
 	if err != nil {
 		msgFailedVoiceFunc()

@@ -51,14 +51,22 @@ func main() {
 
 	botHandlers := handlers.NewHandlersBot(
 		cache, db_service, dbLink,
-		&config.AIConfig{
-			ModelsListEndpoint:       os.Getenv("MODELS_LIST_ENDPOINT"),
-			ImageGenerationModel:     os.Getenv("IMAGE_GENERATION_MODEL"),
-			ImageGenerationEndpoint:  os.Getenv("IMAGE_GENERATION_ENDPOINT"),
-			ImageRecognitionModel:    os.Getenv("IMAGE_RECOGNITION_MODEL"),
-			ImageRecognitionEndpoint: os.Getenv("IMAGE_RECOGNITION_ENDPOINT"),
-			VoiceRecognitionModel:    os.Getenv("VOICE_RECOGNITION_MODEL"),
-			VoiceRecognitionEndpoint: os.Getenv("VOICE_RECOGNITION_ENDPOINT"),
+		&config.Config{
+			AI: &config.AIConfig{
+				ModelsListEndpoint:       os.Getenv("MODELS_LIST_ENDPOINT"),
+				ImageGenerationModel:     os.Getenv("IMAGE_GENERATION_MODEL"),
+				ImageGenerationEndpoint:  os.Getenv("IMAGE_GENERATION_ENDPOINT"),
+				ImageRecognitionModel:    os.Getenv("IMAGE_RECOGNITION_MODEL"),
+				ImageRecognitionEndpoint: os.Getenv("IMAGE_RECOGNITION_ENDPOINT"),
+				VoiceRecognitionModel:    os.Getenv("VOICE_RECOGNITION_MODEL"),
+				VoiceRecognitionEndpoint: os.Getenv("VOICE_RECOGNITION_ENDPOINT"),
+			},
+			Bot: &config.BotConfig{
+				Admin: &config.Admin{
+					Login:    os.Getenv("MODELS_LIST_ENDPOINT"),
+					Password: os.Getenv("MODELS_LIST_ENDPOINT"),
+				},
+			},
 		},
 	)
 

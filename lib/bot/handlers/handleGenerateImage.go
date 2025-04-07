@@ -38,9 +38,9 @@ func (h *handlers) cmdGenerateImage(ctx context.Context, tgb *bot.Bot, chatID in
 		return
 	}
 
-	url := getURL(user.AiSession.BaseURL, h.config.ImageGenerationEndpoint)
+	url := getURL(user.AiSession.BaseURL, h.config.AI.ImageGenerationEndpoint)
 	size := "256x256"
-	model := h.config.ImageGenerationModel
+	model := h.config.AI.ImageGenerationModel
 	localAIToken := user.AiSession.AIToken
 	pathToImage, err := localai.GenerateImageStableDiffusion(prompt, size, url, model, localAIToken)
 	if err != nil {

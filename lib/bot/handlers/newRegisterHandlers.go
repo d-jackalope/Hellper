@@ -33,13 +33,13 @@ type handlers struct {
 	dbLink string
 	// Postgres database and LLMHandlers
 	dbService *database.Service
-	config    *config.AIConfig
+	config    *config.Config
 
 	// Pass dependencies here
 }
 
 // Constructor of the handlers type
-func NewHandlersBot(cache database.Cacher, db_service *database.Service, dbLink string, config *config.AIConfig) Bot {
+func NewHandlersBot(cache database.Cacher, db_service *database.Service, dbLink string, config *config.Config) Bot {
 	return &handlers{
 		cache:     cache,
 		dbService: db_service,

@@ -38,8 +38,8 @@ func (h *handlers) handleRecognizeImage(ctx context.Context, tgb *bot.Bot, updat
 		prompt = basePromptRecognizeImage
 	}
 
-	url := getURL(user.AiSession.BaseURL, h.config.ImageRecognitionEndpoint)
-	model := h.config.ImageRecognitionModel
+	url := getURL(user.AiSession.BaseURL, h.config.AI.ImageRecognitionEndpoint)
+	model := h.config.AI.ImageRecognitionModel
 	recognize, err := imageRecognition.ImageRecognitionLAI(url, model, tgb.Token(), fileURL, prompt)
 	if err != nil {
 		msgFailedRecognizeFunc()
