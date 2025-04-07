@@ -13,6 +13,9 @@ api_keys.json
 ./configuration/api_keys.json
 *.vscode
 
+# The file is not used in the code; it's SQL code intended for the initial database seeding.
+init_base_data.sql
+
 # Test binary, built with `go test -c`
 *.test
 
