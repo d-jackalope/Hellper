@@ -63,7 +63,7 @@ func (h *handlers) cmdRouter(ctx context.Context, tgb *bot.Bot, update *models.U
 	case "/clearContext":
 		h.cmdClearContext(ctx, tgb, chatID)
 	case "/admin_panel":
-		//h.cmdAdminPanel(ctx, tgb, chatID)
+		h.cmdAdminPanel(ctx, tgb, chatID)
 	}
 }
 
@@ -293,4 +293,27 @@ func (h *handlers) cmdClearContext(ctx context.Context, tgb *bot.Bot, chatID int
 		log.Error().Err(err).Int64("chat_id", chatID).Caller().Msg("error sending message")
 		return
 	}
+}
+
+func (h *handlers) cmdAdminPanel(ctx context.Context, tgb *bot.Bot, chatID int64) {
+	user, ok := ctx.Value(database.UserCtxKey).(database.User)
+	if !ok {
+		log.Error().Int64("chat_id", chatID).Caller().Msg("user not found in context")
+		return
+	}
+
+	if !user.Admin {
+		if result := adminАuthentication(&user, tgb); !result {
+			if _, err := tgb.SendMessage(ctx, &bot.SendMessageParams{ChatID: chatID, Text: "Authentication failed. Type any key..."}); err != nil {
+				log.Error().Err(err).Int64("chat_id", chatID).Caller().Msg("error sending message")
+			}
+			return
+		}
+
+		user.Admin = true
+	}
+
+	//клавиатура
+	//код этапа (любое сообщение админ панель)
+	h.cache.UpdateUser(user)
 }
