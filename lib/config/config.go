@@ -9,13 +9,13 @@ import (
 )
 
 // This package is designed for centralized storage of configurations required for service operation
+// Use the `Get***()` functions from the `config` package to retrieve values from environment variables.
 
-// Configuration for working with various AI APIs
-
+// Don’t forget to declare any new environment variables in the `config` package if needed.
 type Config struct {
 	AI     *AIConfig
 	Bot    *BotConfig
-	DBLINK string `env:"DB_LINK,required,notEmpty"`
+	DBLink string `env:"DB_LINK,required,notEmpty"`
 	TGKey  string `env:"TG_KEY,required,notEmpty"`
 }
 
@@ -38,10 +38,6 @@ type Admin struct {
 	Password string
 }
 
-func GetConfig() {
-
-}
-
 var cfg *Config
 
 // Environment variable loading.
@@ -57,4 +53,24 @@ func LoadConfig() error {
 	}
 	log.Info().Msg("Environment variables loaded successfully.")
 	return nil
+}
+
+func GetConfig() *Config {
+	return cfg
+}
+
+func GetAI() *AIConfig {
+	return GetConfig().AI
+}
+
+func GetBot() *BotConfig {
+	return GetConfig().Bot
+}
+
+func GetDBLink() string {
+	return GetConfig().DBLink
+}
+
+func GetTGKEY() string {
+	return GetConfig().TGKey
 }
