@@ -4,7 +4,6 @@ import (
 	"context"
 	"strings"
 
-	"github.com/JackBekket/hellper/lib/config"
 	"github.com/JackBekket/hellper/lib/database"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -29,22 +28,17 @@ var botName string
 
 // structure to hold dependencies of other packages: postgres, cache, llmHandlers
 type handlers struct {
-	cache  database.Cacher
-	dbLink string
+	cache database.Cacher
 	// Postgres database and LLMHandlers
 	dbService *database.Service
-	config    *config.Config
-
 	// Pass dependencies here
 }
 
 // Constructor of the handlers type
-func NewHandlersBot(cache database.Cacher, db_service *database.Service, dbLink string, config *config.Config) Bot {
+func NewHandlersBot(cache database.Cacher, db_service *database.Service) Bot {
 	return &handlers{
 		cache:     cache,
 		dbService: db_service,
-		dbLink:    dbLink,
-		config:    config,
 	}
 }
 

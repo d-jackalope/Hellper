@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 
+	"github.com/JackBekket/hellper/lib/config"
 	"github.com/JackBekket/hellper/lib/database"
 	"github.com/JackBekket/hellper/lib/localai/imageRecognition"
 	"github.com/go-telegram/bot"
@@ -38,8 +39,8 @@ func (h *handlers) handleRecognizeImage(ctx context.Context, tgb *bot.Bot, updat
 		prompt = basePromptRecognizeImage
 	}
 
-	url := getURL(user.AiSession.BaseURL, h.config.AI.ImageRecognitionEndpoint)
-	model := h.config.AI.ImageRecognitionModel
+	url := getURL(user.AiSession.BaseURL, config.GetAI().ImageRecognitionEndpoint)
+	model := config.GetAI().ImageRecognitionModel
 	recognize, err := imageRecognition.ImageRecognitionLAI(url, model, tgb.Token(), fileURL, prompt)
 	if err != nil {
 		msgFailedRecognizeFunc()

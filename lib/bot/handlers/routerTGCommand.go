@@ -7,6 +7,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 
+	"github.com/JackBekket/hellper/lib/config"
 	"github.com/JackBekket/hellper/lib/database"
 	"github.com/JackBekket/hellper/lib/embeddings"
 	"github.com/JackBekket/hellper/lib/langchain"
@@ -61,6 +62,8 @@ func (h *handlers) cmdRouter(ctx context.Context, tgb *bot.Bot, update *models.U
 		h.cmdSetContext(ctx, tgb, chatID, arg)
 	case "/clearContext":
 		h.cmdClearContext(ctx, tgb, chatID)
+	case "/admin_panel":
+		//h.cmdAdminPanel(ctx, tgb, chatID)
 	}
 }
 
@@ -155,7 +158,7 @@ func (h *handlers) cmdSearchDoc(ctx context.Context, tgb *bot.Bot, chatID int64,
 		return
 	}
 
-	dbLink := h.dbLink
+	dbLink := config.GetDBLink()
 	baseURL := user.AiSession.BaseURL
 
 	localAIToken := user.AiSession.AIToken

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/JackBekket/hellper/lib/agent"
+	"github.com/JackBekket/hellper/lib/config"
 	"github.com/JackBekket/hellper/lib/database"
 	"github.com/JackBekket/hellper/lib/langchain"
 	"github.com/JackBekket/hellper/lib/localai"
@@ -51,7 +52,7 @@ func (h *handlers) handleAPIToken(ctx context.Context, tgb *bot.Bot, update *mod
 	}
 
 	localAIToken := strings.TrimSpace(update.Message.Text)
-	url := getURL(user.AiSession.BaseURL, h.config.AI.ModelsListEndpoint)
+	url := getURL(user.AiSession.BaseURL, config.GetAI().ModelsListEndpoint)
 	aiModelsList, err := localai.GetModelsList(url, localAIToken)
 	if err != nil {
 		var text string

@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/JackBekket/hellper/lib/config"
 	"github.com/JackBekket/hellper/lib/database"
 	"github.com/JackBekket/hellper/lib/localai"
 	"github.com/go-telegram/bot"
@@ -38,9 +39,9 @@ func (h *handlers) cmdGenerateImage(ctx context.Context, tgb *bot.Bot, chatID in
 		return
 	}
 
-	url := getURL(user.AiSession.BaseURL, h.config.AI.ImageGenerationEndpoint)
+	url := getURL(user.AiSession.BaseURL, config.GetAI().ImageGenerationEndpoint)
 	size := "256x256"
-	model := h.config.AI.ImageGenerationModel
+	model := config.GetAI().ImageGenerationModel
 	localAIToken := user.AiSession.AIToken
 	pathToImage, err := localai.GenerateImageStableDiffusion(prompt, size, url, model, localAIToken)
 	if err != nil {

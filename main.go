@@ -27,12 +27,15 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to load .env file")
 	}
-	log.Info().Msg(".env file loaded successfully")
 
-	token := os.Getenv("TG_KEY")
-	dbLink := os.Getenv("DB_LINK")
+	// Loading environment variables from a file. Must be used at the beginning of the main package.
+	// Use the `Get***()` functions from the `config` package to retrieve values from environment variables.
+	// Don’t forget to declare any new environment variables in the `config` package if needed.
+	if err := config.LoadConfig(); err != nil {
+		log.Fatal().Err(err).Msg("failed to load env")
+	}
 
-	dbHandler, err := database.NewHandler(dbLink)
+	dbHandler, err := database.NewHandler(config.GetDBLink())
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create database service")
 	}
@@ -50,24 +53,8 @@ func main() {
 	cache := database.NewMemoryCache()
 
 	botHandlers := handlers.NewHandlersBot(
-		cache, db_service, dbLink,
-		&config.Config{
-			AI: &config.AIConfig{
-				ModelsListEndpoint:       os.Getenv("MODELS_LIST_ENDPOINT"),
-				ImageGenerationModel:     os.Getenv("IMAGE_GENERATION_MODEL"),
-				ImageGenerationEndpoint:  os.Getenv("IMAGE_GENERATION_ENDPOINT"),
-				ImageRecognitionModel:    os.Getenv("IMAGE_RECOGNITION_MODEL"),
-				ImageRecognitionEndpoint: os.Getenv("IMAGE_RECOGNITION_ENDPOINT"),
-				VoiceRecognitionModel:    os.Getenv("VOICE_RECOGNITION_MODEL"),
-				VoiceRecognitionEndpoint: os.Getenv("VOICE_RECOGNITION_ENDPOINT"),
-			},
-			Bot: &config.BotConfig{
-				Admin: &config.Admin{
-					Login:    os.Getenv("MODELS_LIST_ENDPOINT"),
-					Password: os.Getenv("MODELS_LIST_ENDPOINT"),
-				},
-			},
-		},
+		cache,
+		db_service,
 	)
 
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
@@ -77,7 +64,7 @@ func main() {
 		bot.WithMiddlewares(botHandlers.IdentifyUserMiddleware),
 	}
 
-	tgb, err := bot.New(token, opts...)
+	tgb, err := bot.New(config.GetTGKEY(), opts...)
 	if err != nil {
 		log.Fatal().Err(err).Msg("token is missing")
 	}
