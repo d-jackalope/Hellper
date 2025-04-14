@@ -40,6 +40,9 @@ const (
 	//statusConnectingToAIWithLangCallback
 	statusConnectingToAIWithFirstPrompt
 	statusStartDialogSequence
+
+	// Dialog statuses in the admin panel
+	statusAdminАuthentication
 )
 
 // Error messages for the user
