@@ -303,17 +303,19 @@ func (h *handlers) cmdAdminPanel(ctx context.Context, tgb *bot.Bot, chatID int64
 	}
 
 	if !user.Admin {
-		if result := adminАuthentication(&user, tgb); !result {
-			if _, err := tgb.SendMessage(ctx, &bot.SendMessageParams{ChatID: chatID, Text: "Authentication failed. Type any key..."}); err != nil {
-				log.Error().Err(err).Int64("chat_id", chatID).Caller().Msg("error sending message")
-			}
-			return
-		}
-
-		user.Admin = true
+		h.handleAdminStartАuthentication(ctx, tgb, chatID)
+		return
 	}
 
-	//клавиатура
-	//код этапа (любое сообщение админ панель)
+	if _, err := tgb.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID:      chatID,
+		Text:        "To exit the panel, enter the *** command",
+		ReplyMarkup: renderAdminPanelInlineKeyboard(),
+	}); err != nil {
+		log.Error().Err(err).Int64("chat_id", chatID).Caller().Msg("error editing replyMarkup")
+		return
+	}
+
+	user.DialogStatus = statusAdminPanelCallback
 	h.cache.UpdateUser(user)
 }

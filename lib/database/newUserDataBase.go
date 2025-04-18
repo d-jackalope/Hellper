@@ -18,6 +18,7 @@ type User struct {
 	Username     string
 	DialogStatus int8
 	Admin        bool
+	AdminLogin   string
 	AiSession    AiSession
 	Network      string
 	Topics       []int

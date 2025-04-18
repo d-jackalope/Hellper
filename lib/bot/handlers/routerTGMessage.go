@@ -33,8 +33,12 @@ func (h *handlers) textMessageRouter(ctx context.Context, tgb *bot.Bot, update *
 		go h.handleStartDialogSequence(ctx, tgb, update)
 	case statusConnectingToAIWithFirstPrompt:
 		h.handleConnectingToAIWithFirstPrompt(ctx, tgb, update)
-	case statusAdminАuthentication:
-		h.handleAdminАuthentication(ctx, tgb, update)
+	case statusAdminStartАuthentication:
+		h.handleAdminStartАuthentication(ctx, tgb, chatID)
+	case statusAdminPanelEnterPassword:
+		h.handleAdminPanelEnterPassword(ctx, tgb, update)
+	case statusAdminPanelCheckCredentials:
+		h.handleAdminPanelCheckCredentials(ctx, tgb, update)
 	default:
 	}
 }
