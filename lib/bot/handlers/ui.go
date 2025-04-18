@@ -31,7 +31,7 @@ func renderLocalAIProvidersInlineKeyboard(aiProviderList []string) models.Inline
 		buttons = append(buttons, []models.InlineKeyboardButton{
 			{
 				Text:         provider,
-				CallbackData: provider,
+				CallbackData: callbackText(provider),
 			},
 		})
 	}
@@ -45,8 +45,8 @@ func renderAIServicesInlineKeyboard() models.InlineKeyboardMarkup {
 	return models.InlineKeyboardMarkup{
 		InlineKeyboard: [][]models.InlineKeyboardButton{
 			{
-				{Text: "LocalAI", CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
-				{Text: "OpenAI", CallbackData: strconv.Itoa(database.AuthMethodOpenAI)},
+				{Text: kboardAIServicesLocalAI, CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
+				{Text: kboardAIServicesOpenAI, CallbackData: strconv.Itoa(database.AuthMethodOpenAI)},
 			},
 		},
 	}
@@ -56,8 +56,8 @@ func renderAdminPanelInlineKeyboard() models.InlineKeyboardMarkup {
 	return models.InlineKeyboardMarkup{
 		InlineKeyboard: [][]models.InlineKeyboardButton{
 			{
-				{Text: "Settings groups", CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
-				{Text: "Other", CallbackData: strconv.Itoa(database.AuthMethodOpenAI)},
+				{Text: kboardAdminPanelSettingsGroups, CallbackData: callbackText(kboardAdminPanelSettingsGroups)},
+				{Text: kboardAdminPanelOther, CallbackData: callbackText(kboardAdminPanelOther)},
 			},
 		},
 	}
@@ -69,7 +69,7 @@ func renderAdminSettingsGroupInlineKeyboard(groupList []string) models.InlineKey
 		buttons = append(buttons, []models.InlineKeyboardButton{
 			{
 				Text:         group,
-				CallbackData: group,
+				CallbackData: callbackText(group),
 			},
 		})
 	}
@@ -83,9 +83,9 @@ func renderAdminGroupInlineKeyboard() models.InlineKeyboardMarkup {
 	return models.InlineKeyboardMarkup{
 		InlineKeyboard: [][]models.InlineKeyboardButton{
 			{
-				{Text: "New token for this group", CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
-				{Text: "Change the Swarmind server", CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
-				{Text: "Change the bot's base AI model.", CallbackData: strconv.Itoa(database.AuthMethodLocalAI)},
+				{Text: kboardAdminPanelNewToken, CallbackData: callbackText(kboardAdminPanelNewToken)},
+				{Text: kboardAdminChangeServer, CallbackData: callbackText(kboardAdminChangeServer)},
+				{Text: kboardAdminPanelBaseAIModel, CallbackData: callbackText(kboardAdminPanelBaseAIModel)},
 			},
 		},
 	}

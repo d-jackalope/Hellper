@@ -1,5 +1,7 @@
 package handlers
 
+import "strings"
+
 // Messages for the user
 const (
 	msgHello = "Hello! I am Hellper bot, choose the service you'd like to work with!"
@@ -42,7 +44,11 @@ const (
 	statusStartDialogSequence
 
 	// Dialog statuses in the admin panel
-	statusAdminАuthentication
+	statusAdminStartАuthentication
+	statusAdminPanelEnterPassword
+	statusAdminPanelCheckCredentials
+
+	statusAdminPanelCallback
 )
 
 // Error messages for the user
@@ -51,6 +57,28 @@ const (
 	errMsgFailedTrascribeVoice  = "Failed to transcribe the voice message"
 	errMsgFailedRecognizeImage  = "Failed to recognize the image"
 )
+
+// Button text for keyboards
+const (
+	// func renderAdminPanelInlineKeyboard()
+	kboardAdminPanelSettingsGroups = "Settings groups"
+	kboardAdminPanelOther          = "Other"
+
+	// func renderAIServicesInlineKeyboard()
+	kboardAIServicesLocalAI = "LocalAI"
+	kboardAIServicesOpenAI  = "OpenAI"
+
+	// func renderAdminGroupInlineKeyboard()
+	kboardAdminPanelNewToken    = "New token for this group"
+	kboardAdminChangeServer     = "Change the Swarmind server"
+	kboardAdminPanelBaseAIModel = "Change the bot's base AI model"
+)
+
+// Callback value constructor
+func callbackText(buttomText string) string {
+	noSpaces := strings.ReplaceAll(buttomText, " ", "")
+	return "callback_" + noSpaces
+}
 
 // Default values for working with AI. Model names, URL endpointes
 // const (
